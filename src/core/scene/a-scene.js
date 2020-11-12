@@ -302,9 +302,9 @@ module.exports.AScene = registerElement('a-scene', {
               foveationLevel: rendererSystem.foveationLevel,
               multiview: vrManager.multiview
             };
-
+            var sceneElement = document.querySelector('a-scene');
             return vrDisplay.requestPresent([{
-              source: this.canvas,
+              source: sceneElement.renderer.vr,
               attributes: presentationAttributes
             }]).then(enterVRSuccess, enterVRFailure);
           }
