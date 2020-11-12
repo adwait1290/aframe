@@ -13,21 +13,16 @@ var supportsARSession = false;
 var isWebXRAvailable = module.exports.isWebXRAvailable = window.forceWebVR !== true && !window.debug && navigator.xr;
 
 window.addEventListener('vrdisplayactivate', function (evt) {
-  // WebXR takes priority if available.
-  if (navigator.xr) { return; }
-  let canvasEl = document.createElement('canvas');
-  let vrDisplay = evt.display;
-  // Request present immediately. a-scene will be allowed to enter VR without user gesture.
-  let glAttribs = {
-        alpha: false,
-        antialias: true
-  };
-  canvasEl.getContext("webgl", glAttribs);
-  vrDisplay.requestPresent([{source: canvasEl}]).then(function () {
-      let sceneEl = document.querySelector('a-scene');
-      sceneEl.renderer.vr.setDevice(vrDisplay);
-  }, function () {});
+// WebXR takes priority if available.
+if (navigator.xr) { return; }
+
+var sceneEl = document.querySelector('a-scene');
+var canvasEl = sceneEl.renderer.vr;
+vrDisplay = evt.display;
+// Request present immediately. a-scene will be allowed to enter VR without user gesture.
+vrDisplay.requestPresent([{source: canvasEl}]).then(function () {}, function () {});
 });
+
 // Support both WebVR and WebXR APIs.
 if (isWebXRAvailable) {
   var updateEnterInterfaces = function () {
