@@ -288,6 +288,8 @@ module.exports.AScene = registerElement('a-scene', {
               }
               enterVRSuccess();
             });
+
+
           } else {
             vrDisplay = utils.device.getVRDisplay();
             vrManager.setDevice(vrDisplay);
@@ -304,7 +306,7 @@ module.exports.AScene = registerElement('a-scene', {
             };
             var sceneElement = document.querySelector('a-scene');
             return vrDisplay.requestPresent([{
-              source: sceneElement.renderer.vr,
+              source: sceneElement.canvas,
               attributes: presentationAttributes
             }]).then(enterVRSuccess, enterVRFailure);
           }
