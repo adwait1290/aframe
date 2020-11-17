@@ -265,15 +265,20 @@ module.exports.AScene = registerElement('a-scene', {
         var vrManager = self.renderer.vr;
 
         // Don't enter VR if already in VR.
-        if (this.is('vr-mode')) { return Promise.resolve('Already in VR.'); }
-
+        if (this.is('vr-mode')) {
+          console.log("AFRAME this.is(vr-mode");
+          return Promise.resolve('Already in VR.');
+        }
         // Has VR.
         if (this.checkHeadsetConnected() || this.isMobile) {
+          console.log("AFRAME this.checkHeadsetConnected");
           vrManager.enabled = true;
 
           if (this.hasWebXR) {
+            console.log("AFRAME this.hasWebXR");
             // XR API.
             if (this.xrSession) {
+              console.log("AFRAME this.xrSession");
               this.xrSession.removeEventListener('end', this.exitVRBound);
             }
             navigator.xr.requestSession(useAR ? 'immersive-ar' : 'immersive-vr', {
@@ -291,20 +296,30 @@ module.exports.AScene = registerElement('a-scene', {
 
 
           } else {
+            console.log("AFRAME !this.hasWebXR")
             vrDisplay = utils.device.getVRDisplay();
+            console.log("AFRAME vrDisplay ".concat(vrDisplay).concat(" ").concat(Object.keys(vrDisplay)));
+            console.log("AFRAME vrManager ".concat(vrManager).concat(" ").concat(Object.keys(vrManager)));
+
             vrManager.setDevice(vrDisplay);
             if (vrDisplay.isPresenting &&
                 !window.hasNativeWebVRImplementation) {
+              console.log("AFRAME vrDisplay.isPresenting && " +
+                  "                !window.hasNativeWebVRImplementation");
               enterVRSuccess();
               return Promise.resolve();
             }
             var rendererSystem = this.getAttribute('renderer');
+            console.log("AFRAME rendererSystem ".concat(rendererSystem).concat(" ").concat(Object.keys(rendererSystem)));
+
             var presentationAttributes = {
               highRefreshRate: rendererSystem.highRefreshRate,
               foveationLevel: rendererSystem.foveationLevel,
               multiview: vrManager.multiview
             };
             var sceneElement = document.querySelector('a-scene');
+            console.log("AFRAME sceneElement ".concat(sceneElement).concat(" ").concat(Object.keys(sceneElement)));
+
             return vrDisplay.requestPresent([{
               source: sceneElement.canvas,
               attributes: presentationAttributes
