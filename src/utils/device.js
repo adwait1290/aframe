@@ -11,13 +11,17 @@ var supportsARSession = false;
 
 // HACK: We need force WebVR in Hubs with the window.forceWebVR flag for the time being, until Hubs implements WebXR support.
 var isWebXRAvailable = module.exports.isWebXRAvailable = window.forceWebVR !== true && !window.debug && navigator.xr;
-
+console.log("isWebXrAvailable".concat(isWebXRAvailable.toString()));
 window.addEventListener('vrdisplayactivate', function (evt) {
 // WebXR takes priority if available.
-if (navigator.xr) { return; }
+if (navigator.xr) {
+  console.log("naviator.vr hit");
+  return; }
 
 var sceneEl = document.querySelector('a-scene');
+console.log("sceneEl = ".concat(sceneEl).concat(" ").concat(Object.keys(sceneEl)));
 var canvasEl = sceneEl.renderer.vr;
+console.log("canvasEl = ".concat(canvasEl).concat(" ").concat(Object.keys(canvasEl)));
 vrDisplay = evt.display;
 // Request present immediately. a-scene will be allowed to enter VR without user gesture.
 vrDisplay.requestPresent([{source: canvasEl}]).then(function () {}, function () {});
