@@ -263,7 +263,7 @@ module.exports.AScene = registerElement('a-scene', {
         var self = this;
         var vrDisplay;
         var vrManager = self.renderer.vr;
-
+        console.dir(vrManager);
         // Don't enter VR if already in VR.
         if (this.is('vr-mode')) {
           console.log("AFRAME this.is(vr-mode");
@@ -298,9 +298,10 @@ module.exports.AScene = registerElement('a-scene', {
           } else {
             console.log("AFRAME !this.hasWebXR")
             vrDisplay = utils.device.getVRDisplay();
+            console.dir(vrDisplay);
             console.log("AFRAME vrDisplay ".concat(vrDisplay).concat(" ").concat(Object.keys(vrDisplay)));
             console.log("AFRAME vrManager ".concat(vrManager).concat(" ").concat(Object.keys(vrManager)));
-
+            console.dir(vrManager);
             vrManager.setDevice(vrDisplay);
             if (vrDisplay.isPresenting &&
                 !window.hasNativeWebVRImplementation) {
@@ -310,6 +311,8 @@ module.exports.AScene = registerElement('a-scene', {
               return Promise.resolve();
             }
             var rendererSystem = this.getAttribute('renderer');
+            console.log("remderomgSyste, ".concat(rendererSystem));
+            console.dir(rendererSystem);
             console.log("AFRAME rendererSystem ".concat(rendererSystem).concat(" ").concat(Object.keys(rendererSystem)));
 
             var presentationAttributes = {
@@ -318,6 +321,7 @@ module.exports.AScene = registerElement('a-scene', {
               multiview: vrManager.multiview
             };
             var sceneElement = document.querySelector('a-scene');
+            console.dir(sceneElement);
             console.log("AFRAME sceneElement ".concat(sceneElement).concat(" ").concat(Object.keys(sceneElement)));
 
             return vrDisplay.requestPresent([{
@@ -649,7 +653,7 @@ module.exports.AScene = registerElement('a-scene', {
             });
 
             if (context) {
-              console.log('Using WebGL 2.0 context.');
+              console.dir('Using WebGL 2.0 context.');
               rendererConfig.context = context;
 
               const multiviewSupported = (!!context.getExtension('WEBGL_multiview') || !!context.getExtension('OVR_multiview'));
