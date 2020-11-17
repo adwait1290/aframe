@@ -11,17 +11,17 @@ var supportsARSession = false;
 
 // HACK: We need force WebVR in Hubs with the window.forceWebVR flag for the time being, until Hubs implements WebXR support.
 var isWebXRAvailable = module.exports.isWebXRAvailable = window.forceWebVR !== true && !window.debug && navigator.xr;
-console.log("isWebXrAvailable".concat(isWebXRAvailable.toString()));
+console.log("AFRAME isWebXrAvailable ".concat(isWebXRAvailable.toString()));
 window.addEventListener('vrdisplayactivate', function (evt) {
 // WebXR takes priority if available.
 if (navigator.xr) {
-  console.log("naviator.vr hit");
+  console.log("AFRAME naviator.vr hit");
   return; }
 
 var sceneEl = document.querySelector('a-scene');
-console.log("sceneEl = ".concat(sceneEl).concat(" ").concat(Object.keys(sceneEl)));
+console.log("AFRAME sceneEl = ".concat(sceneEl).concat(" ").concat(Object.keys(sceneEl)));
 var canvasEl = sceneEl.renderer.vr;
-console.log("canvasEl = ".concat(canvasEl).concat(" ").concat(Object.keys(canvasEl)));
+console.log("AFRAME canvasEl = ".concat(canvasEl).concat(" ").concat(Object.keys(canvasEl)));
 vrDisplay = evt.display;
 // Request present immediately. a-scene will be allowed to enter VR without user gesture.
 vrDisplay.requestPresent([{source: canvasEl}]).then(function () {}, function () {});
@@ -31,13 +31,17 @@ vrDisplay.requestPresent([{source: canvasEl}]).then(function () {}, function () 
 if (isWebXRAvailable) {
   var updateEnterInterfaces = function () {
     var sceneEl = document.querySelector('a-scene');
+    console.log("AFRAME isWebXrAvailable sceneEl = ".concat(sceneEl).concat(" ").concat(Object.keys(sceneEl)));
     if (!sceneEl) {
+      console.log("AFRAME !sceneEl hit";
       window.addEventListener('DOMContentLoaded', updateEnterInterfaces);
       return;
     }
     if (sceneEl.hasLoaded && sceneEl.components['vr-mode-ui']) {
+      console.log("AFRAME scene.hasLoaded hit ");
       sceneEl.components['vr-mode-ui'].updateEnterInterfaces();
     } else {
+      console.log("AFRAME scene.hasLoaded else hit ");
       sceneEl.addEventListener('loaded', updateEnterInterfaces);
     }
   };
