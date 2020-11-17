@@ -33,7 +33,7 @@ if (isWebXRAvailable) {
     var sceneEl = document.querySelector('a-scene');
     console.log("AFRAME isWebXrAvailable sceneEl = ".concat(sceneEl).concat(" ").concat(Object.keys(sceneEl)));
     if (!sceneEl) {
-      console.log("AFRAME !sceneEl hit";
+      console.log("AFRAME !sceneEl hit");
       window.addEventListener('DOMContentLoaded', updateEnterInterfaces);
       return;
     }
