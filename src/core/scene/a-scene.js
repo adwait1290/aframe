@@ -275,7 +275,6 @@ module.exports.AScene = registerElement('a-scene', {
 
         let sceneEl = document.querySelector('a-scene');
         let canvasEl = sceneEl.canvas;
-
         vrDisplay = evt.display;
         var rendererSystem = this.getAttribute('renderer');
         var presentationAttributes = {
@@ -290,8 +289,8 @@ module.exports.AScene = registerElement('a-scene', {
               source: canvasEl,
               attributes: presentationAttributes
             }]).then(enterVRSuccess, enterVRFailure);
-        // enterVRSuccess();
-        // return Promise.resolve();
+        enterVRSuccess();
+        return Promise.resolve();
 
         // // Has VR.
         // if (this.checkHeadsetConnected() || this.isMobile) {
@@ -401,9 +400,8 @@ module.exports.AScene = registerElement('a-scene', {
           }
         }
       },
-      // writable: true
+      writable: true
     },
-      }
      /**
      * Call `exitPresent` if WebVR / WebXR or WebVR polyfill.
      * Handle events, states, fullscreen styles.
