@@ -275,12 +275,23 @@ module.exports.AScene = registerElement('a-scene', {
 
         let sceneEl = document.querySelector('a-scene');
         let canvasEl = sceneEl.canvas;
+
         vrDisplay = evt.display;
+        var rendererSystem = this.getAttribute('renderer');
+        var presentationAttributes = {
+              highRefreshRate: rendererSystem.highRefreshRate,
+              foveationLevel: rendererSystem.foveationLevel,
+              multiview: vrManager.multiview
+            };
         // Request present immediately. a-scene will be allowed to enter VR without user gesture.
-        vrDisplay.requestPresent([{source: canvasEl}]).then(function () {}, function () {});
-        });
-        enterVRSuccess();
-        return Promise.resolve();
+        // vrDisplay.requestPresent([{source: canvasEl}]).then(function () {}, function () {});
+        // });
+        return vrDisplay.requestPresent([{
+              source: canvasEl,
+              attributes: presentationAttributes
+            }]).then(enterVRSuccess, enterVRFailure);
+        // enterVRSuccess();
+        // return Promise.resolve();
 
         // // Has VR.
         // if (this.checkHeadsetConnected() || this.isMobile) {
