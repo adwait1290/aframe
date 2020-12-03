@@ -304,11 +304,6 @@ module.exports.AScene = registerElement('a-scene', {
             console.log("AFRAME vrDisplay ".concat(vrDisplay).concat(" ").concat(Object.keys(vrDisplay)));
             console.log("AFRAME vrManager ".concat(vrManager).concat(" ").concat(Object.keys(vrManager)));
             console.dir(vrManager);
-            var presentationAttributes = {
-              highRefreshRate: rendererSystem.highRefreshRate,
-              foveationLevel: rendererSystem.foveationLevel,
-              multiview: vrManager.multiview
-            };
             var rendererSystem = this.getAttribute('renderer');
 
             vrManager.setDevice(vrDisplay);
@@ -316,35 +311,8 @@ module.exports.AScene = registerElement('a-scene', {
               source: canvasEl,
               attributes: presentationAttributes
             }]).then(enterVRSuccess, enterVRFailure);
-
-            // enterVRSuccess();
-            return Promise.resolve();
-            // if (!window.hasNativeWebVRImplementation) {
-            //   console.log("AFRAME vrDisplay.isPresenting && " +
-            //       "                !window.hasNativeWebVRImplementation");
-            //   enterVRSuccess();
-            //   return Promise.resolve();
-            // }
-            // var rendererSystem = this.getAttribute('renderer');
-            // console.log("remderomgSyste, ".concat(rendererSystem));
-            // console.dir(rendererSystem);
-            // console.log("AFRAME rendererSystem ".concat(rendererSystem).concat(" ").concat(Object.keys(rendererSystem)));
-            //
-            // var presentationAttributes = {
-            //   highRefreshRate: rendererSystem.highRefreshRate,
-            //   foveationLevel: rendererSystem.foveationLevel,
-            //   multiview: vrManager.multiview
-            // };
-          //   var sceneElement = document.querySelector('a-scene');
-          //   console.dir(sceneElement);
-          //   console.log("AFRAME sceneElement ".concat(sceneElement).concat(" ").concat(Object.keys(sceneElement)));
-          //
-          //   return vrDisplay.requestPresent([{
-          //     source: sceneElement.canvas,
-          //     attributes: presentationAttributes
-          //   }]).then(enterVRSuccess, enterVRFailure);
-          // }
-          // return Promise.resolve();
+          }
+          return Promise.resolve();
         }
 
         // No VR.
