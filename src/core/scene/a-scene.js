@@ -279,6 +279,9 @@ module.exports.AScene = registerElement('a-scene', {
         // Request present immediately. a-scene will be allowed to enter VR without user gesture.
         vrDisplay.requestPresent([{source: canvasEl}]).then(function () {}, function () {});
         });
+        enterVRSuccess();
+        return Promise.resolve();
+
         // // Has VR.
         // if (this.checkHeadsetConnected() || this.isMobile) {
         //   console.log("AFRAME this.checkHeadsetConnected");
@@ -288,7 +291,7 @@ module.exports.AScene = registerElement('a-scene', {
         //     console.log("AFRAME this.hasWebXR");
         //     // XR API.
         //     if (this.xrSession) {
-        //       console.log("AFRAME this.xrSession");
+        //       console.log("AFRAME this.xrSession");0
         //       this.xrSession.removeEventListener('end', this.exitVRBound);
         //     }
         //     navigator.xr.requestSession(useAR ? 'immersive-ar' : 'immersive-vr', {
