@@ -58727,7 +58727,7 @@ VRDisplay.prototype.removeFullscreenWrapper = function () {
   return element;
 };
 VRDisplay.prototype.requestPresent = function (layers) {
-  var wasPresenting = this.isPresenting;
+  var wasPresenting = true;
   var self = this;
   if (!(layers instanceof Array)) {
     deprecateWarning('VRDisplay.prototype.requestPresent with non-array argument', 'an array of VRLayers as the first argument');
@@ -68452,47 +68452,56 @@ module.exports.AScene = registerElement('a-scene', {
 
         // Has VR.
         if (this.checkHeadsetConnected() || this.isMobile) {
-          vrManager.enabled = true;
+            vrManager.enabled = true;
+            window.addEventListener('vrdisplayactivate', function (evt) {
+            // WebXR takes priority if available.
+            if (navigator.xr) { return; }
 
-          if (this.hasWebXR) {
-            // XR API.
-            if (this.xrSession) {
-              this.xrSession.removeEventListener('end', this.exitVRBound);
-            }
-            navigator.xr.requestSession(useAR ? 'immersive-ar' : 'immersive-vr', {
-              requiredFeatures: ['local-floor'],
-              optionalFeatures: ['bounded-floor']
-            }).then(function requestSuccess (xrSession) {
-              self.xrSession = xrSession;
-              vrManager.setSession(xrSession);
-              xrSession.addEventListener('end', self.exitVRBound);
-              if (useAR) {
-                self.addState('ar-mode');
-              }
-              enterVRSuccess();
+            let sceneEl = document.querySelector('a-scene');
+            let canvasEl = sceneEl.canvas;
+            vrDisplay = evt.display;
+            // Request present immediately. a-scene will be allowed to enter VR without user gesture.
+            vrDisplay.requestPresent([{source: canvasEl}]).then(function () {}, function () {});
             });
-          } else {
-              console.log("A FRAME else on enterScene hit")
-            vrDisplay = utils.device.getVRDisplay();
-              console.dir(vrDisplay);
-            vrManager.setDevice(vrDisplay);
-            if (vrDisplay.isPresenting &&
-                !window.hasNativeWebVRImplementation) {
-              enterVRSuccess();
-              return Promise.resolve();
-            }
-            var rendererSystem = this.getAttribute('renderer');
-            var presentationAttributes = {
-              highRefreshRate: rendererSystem.highRefreshRate,
-              foveationLevel: rendererSystem.foveationLevel,
-              multiview: vrManager.multiview
-            };
-            console.log("A FRAME enterScene about to hit requestPresent");
-            return vrDisplay.requestPresent([{
-              source: this.canvas,
-              attributes: presentationAttributes
-            }]).then(enterVRSuccess, enterVRFailure);
-          }
+          // if (this.hasWebXR) {
+          //   // XR API.
+          //   if (this.xrSession) {
+          //     this.xrSession.removeEventListener('end', this.exitVRBound);
+          //   }
+          //   navigator.xr.requestSession(useAR ? 'immersive-ar' : 'immersive-vr', {
+          //     requiredFeatures: ['local-floor'],
+          //     optionalFeatures: ['bounded-floor']
+          //   }).then(function requestSuccess (xrSession) {
+          //     self.xrSession = xrSession;
+          //     vrManager.setSession(xrSession);
+          //     xrSession.addEventListener('end', self.exitVRBound);
+          //     if (useAR) {
+          //       self.addState('ar-mode');
+          //     }
+          //     enterVRSuccess();
+          //   });
+          // } else {
+          //     console.log("A FRAME else on enterScene hit")
+          //   vrDisplay = utils.device.getVRDisplay();
+          //     console.dir(vrDisplay);
+          //   vrManager.setDevice(vrDisplay);
+          //   if (vrDisplay.isPresenting &&
+          //       !window.hasNativeWebVRImplementation) {
+          //     enterVRSuccess();
+          //     return Promise.resolve();
+          //   }
+          //   var rendererSystem = this.getAttribute('renderer');
+          //   var presentationAttributes = {
+          //     highRefreshRate: rendererSystem.highRefreshRate,
+          //     foveationLevel: rendererSystem.foveationLevel,
+          //     multiview: vrManager.multiview
+          //   };
+          //   console.log("A FRAME enterScene about to hit requestPresent");
+          //   return vrDisplay.requestPresent([{
+          //     source: this.canvas,
+          //     attributes: presentationAttributes
+          //   }]).then(enterVRSuccess, enterVRFailure);
+          // }
           return Promise.resolve();
         }
 
