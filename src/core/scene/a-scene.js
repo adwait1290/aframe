@@ -299,11 +299,6 @@ module.exports.AScene = registerElement('a-scene', {
             console.log("AFRAME !this.hasWebXR");
             vrDisplay = utils.device.getVRDisplay();
             console.dir(vrDisplay);
-            const asyncRequestPresent = async () => {
-              await vrDisplay.requestPresent();
-            };
-            asyncRequestPresent();
-            console.dir(vrDisplay);
             console.log("AFRAME vrDisplay ".concat(vrDisplay).concat(" ").concat(Object.keys(vrDisplay)));
             console.log("AFRAME vrManager ".concat(vrManager).concat(" ").concat(Object.keys(vrManager)));
             console.dir(vrManager);
