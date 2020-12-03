@@ -297,7 +297,7 @@ module.exports.AScene = registerElement('a-scene', {
 
           } else {
             console.log("AFRAME !this.hasWebXR");
-            vrDisplay = utils.device.getVRDisplay();
+             vrDisplay = utils.device.getVRDisplay();
             let sceneEl = document.querySelector('a-scene');
             let canvasEl = sceneEl.canvas;
             console.dir(vrDisplay);
@@ -305,6 +305,11 @@ module.exports.AScene = registerElement('a-scene', {
             console.log("AFRAME vrManager ".concat(vrManager).concat(" ").concat(Object.keys(vrManager)));
             console.dir(vrManager);
             var rendererSystem = this.getAttribute('renderer');
+            var presentationAttributes = {
+              highRefreshRate: rendererSystem.highRefreshRate,
+              foveationLevel: rendererSystem.foveationLevel,
+              multiview: vrManager.multiview
+            };
 
             vrManager.setDevice(vrDisplay);
                         return vrDisplay.requestPresent([{
