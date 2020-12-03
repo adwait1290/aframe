@@ -68472,7 +68472,9 @@ module.exports.AScene = registerElement('a-scene', {
               enterVRSuccess();
             });
           } else {
+              console.log("A FRAME else on enterScene hit")
             vrDisplay = utils.device.getVRDisplay();
+              console.dir(vrDisplay);
             vrManager.setDevice(vrDisplay);
             if (vrDisplay.isPresenting &&
                 !window.hasNativeWebVRImplementation) {
@@ -68485,7 +68487,7 @@ module.exports.AScene = registerElement('a-scene', {
               foveationLevel: rendererSystem.foveationLevel,
               multiview: vrManager.multiview
             };
-
+            console.log("A FRAME enterScene about to hit requestPresent");
             return vrDisplay.requestPresent([{
               source: this.canvas,
               attributes: presentationAttributes
