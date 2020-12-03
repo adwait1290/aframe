@@ -68491,7 +68491,7 @@ module.exports.AScene = registerElement('a-scene', {
             return vrDisplay.requestPresent([{
               source: this.canvas,
               attributes: presentationAttributes
-            }]).then(enterVRSuccess, enterVRFailure);
+            }]).then(enterVRSuccess);
           }
           return Promise.resolve();
         }
