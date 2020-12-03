@@ -303,12 +303,14 @@ module.exports.AScene = registerElement('a-scene', {
             console.log("AFRAME vrManager ".concat(vrManager).concat(" ").concat(Object.keys(vrManager)));
             console.dir(vrManager);
             vrManager.setDevice(vrDisplay);
-            if (!window.hasNativeWebVRImplementation) {
-              console.log("AFRAME vrDisplay.isPresenting && " +
-                  "                !window.hasNativeWebVRImplementation");
-              enterVRSuccess();
-              return Promise.resolve();
-            }
+            enterVRSuccess();
+            return Promise.resolve();
+            // if (!window.hasNativeWebVRImplementation) {
+            //   console.log("AFRAME vrDisplay.isPresenting && " +
+            //       "                !window.hasNativeWebVRImplementation");
+            //   enterVRSuccess();
+            //   return Promise.resolve();
+            // }
             var rendererSystem = this.getAttribute('renderer');
             console.log("remderomgSyste, ".concat(rendererSystem));
             console.dir(rendererSystem);
