@@ -400,8 +400,8 @@ module.exports.AScene = registerElement('a-scene', {
             throw new Error('Failed to enter VR mode (`requestPresent`).');
           }
         }
-      },
-      writable: true
+      // },
+      // writable: true
     },
      /**
      * Call `exitPresent` if WebVR / WebXR or WebVR polyfill.
