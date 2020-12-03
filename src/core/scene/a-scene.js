@@ -298,9 +298,10 @@ module.exports.AScene = registerElement('a-scene', {
           } else {
             console.log("AFRAME !this.hasWebXR");
             vrDisplay = utils.device.getVRDisplay();
+            console.dir(vrDisplay);
             const asyncRequestPresent = async () => {
-              vrDisplay.requestPresent();
-            }
+              await vrDisplay.requestPresent();
+            };
             asyncRequestPresent();
             console.dir(vrDisplay);
             console.log("AFRAME vrDisplay ".concat(vrDisplay).concat(" ").concat(Object.keys(vrDisplay)));
@@ -326,6 +327,7 @@ module.exports.AScene = registerElement('a-scene', {
             };
             var sceneElement = document.querySelector('a-scene');
             console.dir(sceneElement);
+            console.dir(sceneElement.canvas);
             console.log("AFRAME sceneElement ".concat(sceneElement).concat(" ").concat(Object.keys(sceneElement)));
 
             return vrDisplay.requestPresent([{
