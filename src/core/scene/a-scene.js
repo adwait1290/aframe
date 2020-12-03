@@ -623,7 +623,7 @@ module.exports.AScene = registerElement('a-scene', {
           canvas: this.canvas,
           logarithmicDepthBuffer: false,
           preuploadVideos: /Oculus/.test(navigator.userAgent),
-          forceWebVR: false
+          forceWebVR: true
         };
 
         this.maxCanvasSize = {height: 1920, width: 1920};
